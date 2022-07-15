@@ -7,17 +7,15 @@ import store from './redux/store';
 import ToastContextProvider from './context/ToastContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <Router>
-      <Provider store={store}>
-        <ToastContextProvider>
-          <App />
-        </ToastContextProvider>
-      </Provider>
-    </Router>
-  </React.StrictMode>
+    <React.StrictMode>
+        <Router>
+            <Provider store={store}>
+                <ToastContextProvider>
+                    <App />
+                </ToastContextProvider>
+            </Provider>
+        </Router>
+    </React.StrictMode>,
 );
