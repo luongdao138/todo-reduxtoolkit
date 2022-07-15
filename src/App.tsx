@@ -20,6 +20,8 @@ import {
   selectAllTodos,
 } from './redux/todo/todo.slice';
 import { v4 as uuid } from 'uuid';
+import DateTime from './components/Datetime';
+import SearchTodo from './components/SearchTodo';
 
 const App = () => {
   const { handleAddToast } = useToastContext();
@@ -27,38 +29,10 @@ const App = () => {
   const todos = useAppSelector(getTodoSelector);
   const selectedTodos = useAppSelector(getSelectedTodos);
   const [selectedItem, setSelectedItem] = useState<Todo | undefined>();
-  const [showAddForm, setShowAddForm] = useState<boolean>(false);
-  const [showEditForm, setShowEditForm] = useState<boolean>(false);
-  const [showTodoDetail, setShowTodoDetail] = useState<boolean>(false);
-  const {
-    value: openDelete,
-    setFalse: handleCloseDelete,
-    setTrue: handleOpenDelete,
-  } = useBoolean(false);
-
-  const handleOpenAddForm = () => {
-    setShowAddForm(true);
-  };
-
-  const handleCloseAddForm = () => {
-    setShowAddForm(false);
-  };
-
-  const handleOpenEditForm = () => {
-    setShowEditForm(true);
-  };
-
-  const handleCloseEditForm = () => {
-    setShowEditForm(false);
-  };
-
-  const handleOpenTodoDetail = () => {
-    setShowTodoDetail(true);
-  };
-
-  const handleCloseTodoDetail = () => {
-    setShowTodoDetail(false);
-  };
+  const { value: showAddForm, setTrue: handleOpenAddForm, setFalse: handleCloseAddForm } = useBoolean(false)
+  const { value: showEditForm, setTrue: handleOpenEditForm, setFalse: handleCloseEditForm } = useBoolean(false)
+  const { value: showTodoDetail, setTrue: handleOpenTodoDetail, setFalse: handleCloseTodoDetail } = useBoolean(false)
+  const { value: openDelete, setFalse: handleCloseDelete, setTrue: handleOpenDelete } = useBoolean(false);
 
   const handleUnCheckedAllTodos = () => {
     dispatch(clearSelectedTodos());
@@ -91,6 +65,7 @@ const App = () => {
 
   return (
     <div className='bg-slate-200 min-h-screen py-4'>
+      <DateTime/>
       <ToastContainer position={NotificationPosition.TOP_RIGHT} />
       <Modal
         open={showAddForm}
@@ -98,17 +73,6 @@ const App = () => {
         onClose={handleCloseAddForm}
       >
         <AddTodoForm onCloseModal={handleCloseAddForm} />
-      </Modal>
-      <Modal
-        open={showEditForm}
-        closeOnClickBackdrop
-        onClose={handleCloseEditForm}
-      >
-        <AddTodoForm
-          isEdit
-          selectedItem={selectedItem}
-          onCloseModal={handleCloseEditForm}
-        />
       </Modal>
       <Modal
         open={showEditForm}
@@ -185,6 +149,8 @@ const App = () => {
             </button>
           </div>
         )}
+
+        <SearchTodo />
 
         <div className='mt-4 grid gap-4'>
           {todos.map((todo) => (
