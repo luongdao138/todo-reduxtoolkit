@@ -7,6 +7,7 @@ import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 const persistConfig = {
     key: 'luongdao_todo_app',
     storage,
+    whitelist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
